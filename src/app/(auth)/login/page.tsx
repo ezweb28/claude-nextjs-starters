@@ -25,9 +25,11 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { loginSchema, type LoginSchema } from "@/lib/validations"
+import { useAppStore } from "@/stores/use-app-store"
 
 export default function LoginPage() {
   const router = useRouter()
+  const { setUser } = useAppStore()
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
@@ -41,6 +43,14 @@ export default function LoginPage() {
       // 예시: await signIn(data.email, data.password)
       await new Promise((resolve) => setTimeout(resolve, 1000))
       console.log("로그인 데이터:", data)
+
+      // 사용자 정보 저장 (실제 구현시 API 응답에서 가져옴)
+      setUser({
+        id: "user_" + Math.random().toString(36).substr(2, 9),
+        name: "홍길동",
+        email: data.email,
+      })
+
       toast.success("로그인 성공!", { description: "대시보드로 이동합니다." })
       router.push('/dashboard')
     } catch {

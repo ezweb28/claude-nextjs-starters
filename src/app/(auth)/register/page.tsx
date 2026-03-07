@@ -25,9 +25,11 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { registerSchema, type RegisterSchema } from "@/lib/validations"
+import { useAppStore } from "@/stores/use-app-store"
 
 export default function RegisterPage() {
   const router = useRouter()
+  const { setUser } = useAppStore()
   const form = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
     defaultValues: { name: "", email: "", password: "", confirmPassword: "" },
@@ -41,6 +43,14 @@ export default function RegisterPage() {
       // 예시: await signUp(data)
       await new Promise((resolve) => setTimeout(resolve, 1000))
       console.log("회원가입 데이터:", data)
+
+      // 회원가입 후 사용자 정보 저장
+      setUser({
+        id: "user_" + Math.random().toString(36).substr(2, 9),
+        name: data.name,
+        email: data.email,
+      })
+
       toast.success("회원가입 완료!", { description: "환영합니다!" })
       router.push('/login')
     } catch {
