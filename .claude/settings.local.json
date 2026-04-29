@@ -6,7 +6,9 @@
       "WebFetch",
       "mcp__playwright",
       "mcp__ide__getDiagnostics",
-      "Skill(git:commit)"
+      "Skill(git:commit)",
+      "Bash(mkdir -p .claude/commands/generate-store)",
+      "Bash(mv .claude/commands/generate-store.md .claude/commands/generate-store/index.md)"
     ]
   },
   "enableAllProjectMcpServers": true,
