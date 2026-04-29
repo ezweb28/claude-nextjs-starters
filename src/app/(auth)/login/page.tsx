@@ -56,7 +56,9 @@ export default function LoginPage() {
       addNotification("로그인 성공했습니다!", "success")
       toast.success("로그인 성공!", { description: "대시보드로 이동합니다." })
       router.push('/dashboard')
-    } catch {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "알 수 없는 오류"
+      console.error("로그인 에러:", errorMessage)
       addNotification("로그인에 실패했습니다. 이메일 또는 비밀번호를 확인해주세요.", "error")
       toast.error("로그인 실패", { description: "이메일 또는 비밀번호를 확인해주세요." })
     }

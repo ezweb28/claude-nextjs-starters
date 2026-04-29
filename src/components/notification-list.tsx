@@ -1,6 +1,6 @@
 'use client'
 
-import { useNotificationsStore } from '@/stores/use-notifications-store'
+import { useNotificationsStore, type Notification } from '@/stores/use-notifications-store'
 import { X, CheckCircle, AlertCircle, Info, AlertTriangle } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
@@ -14,7 +14,7 @@ export function NotificationList() {
 
   if (!mounted) return null
 
-  const getIcon = (type: string) => {
+  const getIcon = (type: Notification['type']) => {
     switch (type) {
       case 'success':
         return <CheckCircle className="w-5 h-5" />
@@ -29,7 +29,7 @@ export function NotificationList() {
     }
   }
 
-  const getStyle = (type: string) => {
+  const getStyle = (type: Notification['type']) => {
     switch (type) {
       case 'success':
         return 'bg-green-50 border-green-200 text-green-800'
