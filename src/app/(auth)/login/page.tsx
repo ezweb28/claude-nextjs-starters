@@ -26,10 +26,12 @@ import {
 } from "@/components/ui/card"
 import { loginSchema, type LoginSchema } from "@/lib/validations"
 import { useAppStore } from "@/stores/use-app-store"
+import { useNotificationsStore } from "@/stores/use-notifications-store"
 
 export default function LoginPage() {
   const router = useRouter()
   const { setUser } = useAppStore()
+  const { addNotification } = useNotificationsStore()
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
@@ -51,9 +53,11 @@ export default function LoginPage() {
         email: data.email,
       })
 
+      addNotification("로그인 성공했습니다!", "success")
       toast.success("로그인 성공!", { description: "대시보드로 이동합니다." })
       router.push('/dashboard')
     } catch {
+      addNotification("로그인에 실패했습니다. 이메일 또는 비밀번호를 확인해주세요.", "error")
       toast.error("로그인 실패", { description: "이메일 또는 비밀번호를 확인해주세요." })
     }
   }
